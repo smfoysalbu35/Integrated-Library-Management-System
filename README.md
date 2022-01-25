@@ -21,53 +21,53 @@ DB_PASSWORD=[PASSWORD]
 
 #### Admin features:
 1. System Maintenance:
-i.	User Management.
-ii.	Manage Grade Level.
-iii.	Section Management.
-iv.	Manage Location.
-v.	Manage Close Date.
+1.	User Management.
+2.	Manage Grade Level.
+3.	Section Management.
+4.	Manage Location.
+5.	Manage Close Date.
 
 2. Cataloging:
-i.	Book catalog.
-ii.	Accession.
-iii.	Author.
-iv.	Subject.
+1.	Book catalog.
+2.	Accession.
+3.	Author.
+4.	Subject.
 
 3. Manage Patron:
-i.	Patron Type.
-ii.	Patron. (add a patron)
-iii.	Patron Account.
+1.	Patron Type.
+2.	Patron. (add a patron)
+3.	Patron Account.
 
 4. Attendance Monitoring.
 5. Online Public Access Catalog (OPAC).
 
 6. Circulation:
-i.	Borrow book.
-ii.	Return. (include penalty when patron exceed the due date of the book)
-iii.	Reservation.
-iv.	Penalty List.
-v.	Payment for penalty.
-vi.	Transaction List.
+1.	Borrow book.
+2.	Return. (include penalty when patron exceed the due date of the book)
+3.	Reservation.
+4.	Penalty List.
+5.	Payment for penalty.
+6.	Transaction List.
 
 7. Generate Reports:
-i.	Attendance Monitoring.
-ii.	Top Library User.
-iii.	Top Borrower.
-iv.	Top Borrowed Book.
-v.	Author List.
-vi.	Subject List.
-vii.	Paid Penalty.
-viii.	Unpaid Penalty.
-ix.	Library Clearance
-x.	Library Holdings.
-xi.	Accession Record.
-xii.	Acquisition Record.
+1.	Attendance Monitoring.
+2.	Top Library User.
+3.	Top Borrower.
+4.	Top Borrowed Book.
+5.	Author List.
+6.	Subject List.
+7.	Paid Penalty.
+8.	Unpaid Penalty.
+9.	Library Clearance
+10.	Library Holdings.
+11.	Accession Record.
+12.	Acquisition Record.
 
 #### Patron website features:
-i.	Make Reservation.
-ii.	Attendance Monitoring Record.
-iii.	Borrow Record.
-iv.	Return Record.
-v.	Reservation Record.
-vi.	Penalty Record.
-vii.	Transaction Record.
+1.	Make Reservation.
+2.	Attendance Monitoring Record.
+3.	Borrow Record.
+4.	Return Record.
+5.	Reservation Record.
+6.	Penalty Record.
+7.	Transaction Record.
