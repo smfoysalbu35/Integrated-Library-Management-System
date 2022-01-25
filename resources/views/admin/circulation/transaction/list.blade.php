@@ -1,0 +1,199 @@
+@extends('admin.layouts.default-layout-with-modal')
+
+@section('title', 'Transaction')
+
+@section('content-header')
+    <h1>Transaction Record</h1>
+    <ol class="breadcrumb">
+        <li><p><i class="fa fa-refresh"></i> Circulation</p></li>
+        <li class="active"><a href="{{ route('transactions.index') }}">Transaction</a></li>
+    </ol>
+@endsection
+
+@section('modals')
+    <div class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Transaction Details</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-default">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="transactionDate">Transaction Date</label>
+                                                <span id="transactionDate" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="patronNo">Patron No.</label>
+                                                <span id="patronNo" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="patronName">Patron Name</label>
+                                                <span id="patronName" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="transactBy">Transact by</label>
+                                                <span id="transactBy" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table id="penaltiesTable" class="table table-bordered table-striped table-hover text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Accession No.</th>
+                                                            <th class="text-center">Book Title</th>
+                                                            <th class="text-center">Penalty</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="penaltiesTableBody">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="totalPenalty">Total Penalty</label>
+                                                <span id="totalPenalty" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="payment">Payment</label>
+                                                <span id="payment" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="change">Change</label>
+                                                <span id="change" class="form-control"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Transaction List</h3>
+                </div>
+
+                <div class="box-body">
+                    @include('admin.component.errors-and-messages')
+
+                    <div class="table-responsive">
+                        <table id="transactionsTable" class="table table-bordered table-striped table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Transaction Date</th>
+                                    <th class="text-center">Patron No.</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Total Penalty</th>
+                                    <th class="text-center">Payment</th>
+                                    <th class="text-center">Change</th>
+                                    <th class="text-center">Transact by</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($transactions as $transaction)
+                                    <tr>
+                                        <td>{{ $transaction->transaction_date }}</td>
+                                        <td>{{ $transaction->patron->patron_no }}</td>
+                                        <td>{{ $transaction->patron->first_name . ' ' . $transaction->patron->last_name }}</td>
+                                        <td>{{ $transaction->total_penalty }}</td>
+                                        <td>{{ $transaction->payment }}</td>
+                                        <td>{{ $transaction->change }}</td>
+                                        <td>{{ $transaction->user->first_name . ' ' . $transaction->patron->last_name }}</td>
+                                        <td>
+                                            <button type="button" onclick="viewDetails({{ $transaction->id }})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Details</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('scripts')
+    <script>
+        $('#transactionsTable').DataTable();
+
+        function viewDetails(id) {
+            $.get(`/transactions/${id}`, (response) => {
+                $('.modal').modal('show')
+                $('.form-control').html('')
+                $('#penaltiesTableBody').html('<tr><td colspan="3"><h5>No Penalty Record</h5></td></tr>')
+
+                $('#transactionDate').html(response.data.transaction_date)
+                $('#patronNo').html(response.data.patron.patron_no)
+                $('#patronName').html(response.data.patron.name)
+                $('#transactBy').html(response.data.user.name)
+
+                let penaltiesTable = ''
+                if(response.data.transaction_details.length > 0) {
+                    response.data.transaction_details.forEach(transactionDetail => {
+                        penaltiesTable += `
+                            <tr>
+                                <td>${transactionDetail.accession.accession_no}</td>
+                                <td>${transactionDetail.accession.book.title}</td>
+                                <td>${transactionDetail.penalty.amount}</td>
+                            </tr>
+                        `
+                    })
+                    $('#penaltiesTableBody').html(penaltiesTable)
+                }
+
+                $('#totalPenalty').html(response.data.total_penalty)
+                $('#payment').html(response.data.payment)
+                $('#change').html(response.data.change)
+            });
+        }
+    </script>
+@endpush
